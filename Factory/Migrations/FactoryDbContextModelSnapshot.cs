@@ -357,8 +357,8 @@ namespace Factory.Migrations
                     b.Property<double>("StandardCost")
                         .HasColumnType("float");
 
-                    b.Property<double>("UnitOfMeaeure")
-                        .HasColumnType("float");
+                    b.Property<string>("UnitOfMeasure")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -443,8 +443,8 @@ namespace Factory.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<double>("Area")
-                        .HasColumnType("float");
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InventoryId")
                         .HasColumnType("int");

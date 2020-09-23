@@ -8,7 +8,7 @@ namespace Factory.Entities
     {
         public int Id { get; set; }
 
-        public double Area { get; set; }
+        public string Area { get; set; }
         public string Place { get; set; }
         public int InventoryId { get; set; }
 

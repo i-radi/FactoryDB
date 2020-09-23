@@ -10,7 +10,7 @@ namespace Factory.Entities
         public int Id { get; set; }
 
         public int MaterialId { get; set; }
-        public double UnitOfMeaeure { get; set; }
+        public string UnitOfMeasure { get; set; }
         public double StandardCost { get; set; }
 
         public int CategoryId { get; set; }
