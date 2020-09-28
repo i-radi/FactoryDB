@@ -10,7 +10,7 @@ namespace Factory.Entities
     {
         public int Id { get; set; }
 
-        public double Price { get; set; }
+        public double TotalPrice { get; set; }
         public int Quantity { get; set; }
         public DateTime Date { get; set; }
         public string OrderDetial { get; set; }
@@ -18,8 +18,6 @@ namespace Factory.Entities
 
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public int SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
         public int CarId { get; set; }
         public Car Car { get; set; }
         public ICollection<RawMaterial> RawMaterials { get; set; }
@@ -37,13 +35,11 @@ namespace Factory.Entities
                 .WithMany(x => x.Orders)
                 .HasForeignKey(x => x.CustomerId);
 
-            builder.HasOne(x => x.Supplier)
-                .WithMany(x => x.Orders)
-                .HasForeignKey(x => x.SupplierId);
-
+          
             builder.HasOne(x => x.Car)
                 .WithMany(x => x.Orders)
                 .HasForeignKey(x => x.CarId);
+
         }
     }
 }

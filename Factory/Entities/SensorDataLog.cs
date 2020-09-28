@@ -8,13 +8,13 @@ namespace Factory.Entities
     {
         public int Id { get; set; }
 
-        public string Place { get; set; }
+        public string Location { get; set; }
         public DateTime DateTimeRead { get; set; }
 
         public int SensorId { get; set; }
         public Sensor Sensor { get; set; }
-        public int StorageId { get; set; }
-        public Storage Storage { get; set; }
+        public int WarehouseId { get; set; }
+        public Warehouse Warehouse { get; set; }
     }
 
     public class SensorDataLogConfig : IEntityTypeConfiguration<SensorDataLog>
@@ -29,9 +29,9 @@ namespace Factory.Entities
                 .WithMany(x => x.SensorDataLogs)
                 .HasForeignKey(x => x.SensorId);
 
-            builder.HasOne(x => x.Storage)
+            builder.HasOne(x => x.Warehouse)
                 .WithMany(x => x.SensorDataLogs)
-                .HasForeignKey(x => x.StorageId);
+                .HasForeignKey(x => x.WarehouseId);
         }
     }
 }

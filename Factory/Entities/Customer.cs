@@ -10,6 +10,7 @@ namespace Factory.Entities
         public string GeoLocation { get; set; }
         public int Id { get; set; }
         public string Phone { get; set; }
+
         public ICollection<Order> Orders { get; set; }
 
 
@@ -20,6 +21,7 @@ namespace Factory.Entities
         {
             //Table Level
             builder.ToTable("Customers", "Factory");
+
         }
     }
 }

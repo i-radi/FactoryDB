@@ -8,13 +8,17 @@ namespace Factory.Entities
     {
         public int Id { get; set; }
 
-        public string Place { get; set; }
+        public string Type { get; set; }
         public int SensorId { get; set; }
+        public double CostPerHour { get; set; }
+
 
         public int CarId { get; set; }
         public Car Car { get; set; }
 
         public ICollection<SensorDataLog> SensorDataLogs { get; set; }
+        public ICollection<RawMaterial> RawMaterials { get; set; }
+
     }
 
     public class SensorConfig : IEntityTypeConfiguration<Sensor>

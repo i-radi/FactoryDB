@@ -12,11 +12,14 @@ namespace Factory.Entities
         public double CostPerHour { get; set; }
         public int CarNumber { get; set; }
         public string CarType { get; set; }
-        public int Year { get; set; }
+        public int EndYear { get; set; }
 
         public ICollection<Order> Orders { get; set; }
         public int GarageId { get; set; }
         public Garage Garage { get; set; }
+        public int SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
+
         public ICollection<Sensor> Sensors { get; set; }
         public ICollection<MachinePart> MachineParts { get; set; }
     }
@@ -31,6 +34,10 @@ namespace Factory.Entities
             builder.HasOne(x => x.Garage)
                 .WithMany(x => x.Cars)
                 .HasForeignKey(x => x.GarageId);
+
+            builder.HasOne(x => x.Supplier)
+                .WithMany(x => x.Cars)
+                .HasForeignKey(x => x.SupplierId);
         }
     }
 }

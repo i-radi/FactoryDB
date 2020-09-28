@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Factory.Entities.Joins;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Factory.Entities
@@ -12,8 +14,8 @@ namespace Factory.Entities
 
         public int ShiftId { get; set; }
         public Shift Shift { get; set; }
-        public int MachineId { get; set; }
-        public Machine Machine { get; set; }
+        public ICollection<Line> Lines { get; set; }
+        public ICollection<EmployeeLineJoin> EmployeeLineJoins { get; set; }
     }
 
     public class EmployeeConfig : IEntityTypeConfiguration<Employee>
@@ -27,10 +29,13 @@ namespace Factory.Entities
             builder.HasOne(x => x.Shift)
                 .WithMany(x => x.Employees)
                 .HasForeignKey(x => x.ShiftId);
-
-            builder.HasOne(x => x.Machine)
+            builder.HasMany(x => x.Lines)
                 .WithMany(x => x.Employees)
-                .HasForeignKey(x => x.MachineId);
+                .UsingEntity<EmployeeLineJoin>(
+                    b => b.HasOne(e => e.Line).WithMany(x => x.EmployeeLineJoins)
+                        .HasForeignKey(e => e.LineId),
+                    b => b.HasOne(e => e.Employee).WithMany(x => x.EmployeeLineJoins)
+                        .HasForeignKey(e => e.EmployeeId));
 
         }
     }

@@ -19,6 +19,8 @@ namespace Factory.Entities
         public ICollection<Machine> Machines { get; set; }
         public ICollection<Shift> Shifts { get; set; }
         public ICollection<ShiftLineJoin> ShiftLineJoins { get; set; }
+        public ICollection<Employee> Employees { get; set; }
+        public ICollection<EmployeeLineJoin> EmployeeLineJoins { get; set; }
 
     }
     public class LineConfig : IEntityTypeConfiguration<Line>

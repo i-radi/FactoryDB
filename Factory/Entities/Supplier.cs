@@ -6,11 +6,13 @@ namespace Factory.Entities
 {
     public class Supplier
     {
-        public string GeoLocation { get; set; }
         public int Id { get; set; }
-        public string Phone { get; set; }
+        public string Name { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public string Location { get; set; }
+
+        public ICollection<RawMaterial> RawMaterials { get; set; }
+        public ICollection<Car> Cars { get; set; }
 
 
     }

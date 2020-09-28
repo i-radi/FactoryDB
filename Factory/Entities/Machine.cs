@@ -10,12 +10,12 @@ namespace Factory.Entities
         public int Id { get; set; }
 
         public double AverageCostPerHour { get; set; }
+        public string Description { get; set; }
 
         public int LineId { get; set; }
         public Line Line { get; set; }
 
         public ICollection<MachinePart> MachineParts { get; set; }
-        public ICollection<Employee> Employees { get; set; }
     }
 
 

@@ -4,24 +4,25 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Factory.Entities
 {
-    public class Storage
+    public class Warehouse
     {
         public int Id { get; set; }
 
-        public string Area { get; set; }
-        public string Place { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
         public int InventoryId { get; set; }
 
         public ICollection<Product> products { get; set; }
-        public ICollection<MachinePart> MachineParts { get; set; }
         public ICollection<SensorDataLog> SensorDataLogs { get; set; }
+        public ICollection<ProductDetail> ProductDetails { get; set; }
+
     }
-    public class StorageConfig : IEntityTypeConfiguration<Storage>
+    public class StorageConfig : IEntityTypeConfiguration<Warehouse>
     {
-        public void Configure(EntityTypeBuilder<Storage> builder)
+        public void Configure(EntityTypeBuilder<Warehouse> builder)
         {
             //Table Level
-            builder.ToTable("Storages", "Factory");
+            builder.ToTable("Warehouses", "Factory");
         }
     }
 }

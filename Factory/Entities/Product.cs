@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,16 +12,16 @@ namespace Factory.Entities
         public int Id { get; set; }
 
         public int SerialNumber { get; set; }
-        public DateTime ProductionDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public int Quantity { get; set; }
         public double Price { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public int StorageId { get; set; }
-        public Storage Storage { get; set; }
+        public int WarehouseId { get; set; }
+        public Warehouse Warehouse { get; set; }
         public int LineId { get; set; }
         public Line Line { get; set; }
+        public ICollection<ProductDetail> ProductDetails { get; set; }
     }
     public class ProductConfig : IEntityTypeConfiguration<Product>
     {
@@ -32,9 +35,9 @@ namespace Factory.Entities
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.CategoryId);
 
-            builder.HasOne(x => x.Storage)
+            builder.HasOne(x => x.Warehouse)
                 .WithMany(x => x.products)
-                .HasForeignKey(x => x.StorageId);
+                .HasForeignKey(x => x.WarehouseId);
 
             builder.HasOne(x => x.Line)
                 .WithMany(x => x.Products)

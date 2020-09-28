@@ -14,24 +14,25 @@ namespace Factory
         }
 
         #region DBSets
-        public DbSet<RawMaterial> RawMaterials { get; set; }
+        public DbSet<Car> Cars { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Garage> Garages { get; set; }
         public DbSet<Line> Lines { get; set; }
         public DbSet<Machine> Machines { get; set; }
         public DbSet<MachinePart> MachineParts { get; set; }
-        public DbSet<Shift> Shifts { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Storage> Storages { get; set; }
-        public DbSet<Car> Cars { get; set; }
-        public DbSet<Garage> Garages { get; set; }
-        public DbSet<SensorDataLog> SensorDataLogs { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductDetail> ProductDetails { get; set; }
+
+        public DbSet<RawMaterial> RawMaterials { get; set; }
         public DbSet<Sensor> Sensor { get; set; }
-        public DbSet<MaterialOrderJoin> MaterialOrderJoins { get; set; }
-        public DbSet<ShiftLineJoin> ShiftLineJoins { get; set; }
+        public DbSet<SensorDataLog> SensorDataLogs { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
+
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

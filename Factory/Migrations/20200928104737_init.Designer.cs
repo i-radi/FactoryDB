@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Factory.Migrations
 {
     [DbContext(typeof(FactoryDbContext))]
-    [Migration("20200923104645_init")]
+    [Migration("20200928104737_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,15 +37,20 @@ namespace Factory.Migrations
                     b.Property<double>("CostPerHour")
                         .HasColumnType("float");
 
+                    b.Property<int>("EndYear")
+                        .HasColumnType("int");
+
                     b.Property<int>("GarageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Year")
+                    b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GarageId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Cars", "Factory");
                 });
@@ -96,9 +101,6 @@ namespace Factory.Migrations
                     b.Property<int>("IDNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("MachineId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Salary")
                         .HasColumnType("float");
 
@@ -109,8 +111,6 @@ namespace Factory.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MachineId");
 
                     b.HasIndex("ShiftId");
 
@@ -136,6 +136,28 @@ namespace Factory.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Garages", "Factory");
+                });
+
+            modelBuilder.Entity("Factory.Entities.Joins.EmployeeLineJoin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LineId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("LineId");
+
+                    b.ToTable("EmployeeLineJoin", "Factory");
                 });
 
             modelBuilder.Entity("Factory.Entities.Joins.MaterialOrderJoin", b =>
@@ -216,6 +238,9 @@ namespace Factory.Migrations
                     b.Property<double>("AverageCostPerHour")
                         .HasColumnType("float");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LineId")
                         .HasColumnType("int");
 
@@ -236,19 +261,16 @@ namespace Factory.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Function")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("CostPerHour")
+                        .HasColumnType("float");
 
                     b.Property<int>("MachineId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaintenanceAge")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("StorageId")
+                    b.Property<int>("PartNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -256,8 +278,6 @@ namespace Factory.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("MachineId");
-
-                    b.HasIndex("StorageId");
 
                     b.ToTable("MachineParts", "Factory");
                 });
@@ -281,14 +301,11 @@ namespace Factory.Migrations
                     b.Property<string>("OrderDetial")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
@@ -298,8 +315,6 @@ namespace Factory.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("Orders", "Factory");
                 });
@@ -314,22 +329,19 @@ namespace Factory.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("LineId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("ProductionDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("StorageId")
+                    b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -338,9 +350,43 @@ namespace Factory.Migrations
 
                     b.HasIndex("LineId");
 
-                    b.HasIndex("StorageId");
+                    b.HasIndex("WarehouseId");
 
                     b.ToTable("Products", "Factory");
+                });
+
+            modelBuilder.Entity("Factory.Entities.ProductDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ProductionDateT")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("ProductDetails", "Factory");
                 });
 
             modelBuilder.Entity("Factory.Entities.RawMaterial", b =>
@@ -353,18 +399,37 @@ namespace Factory.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
+
                     b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Result")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SensorId")
                         .HasColumnType("int");
 
                     b.Property<double>("StandardCost")
                         .HasColumnType("float");
 
-                    b.Property<double>("UnitOfMeaeure")
-                        .HasColumnType("float");
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitOfMeasure")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("SensorId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("RawMaterials", "Factory");
                 });
@@ -379,11 +444,14 @@ namespace Factory.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Place")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("CostPerHour")
+                        .HasColumnType("float");
 
                     b.Property<int>("SensorId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -402,20 +470,20 @@ namespace Factory.Migrations
                     b.Property<DateTime>("DateTimeRead")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Place")
+                    b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SensorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StorageId")
+                    b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SensorId");
 
-                    b.HasIndex("StorageId");
+                    b.HasIndex("WarehouseId");
 
                     b.ToTable("SensorDataLogs", "Factory");
                 });
@@ -430,33 +498,15 @@ namespace Factory.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("Shifts", "Factory");
-                });
-
-            modelBuilder.Entity("Factory.Entities.Storage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<double>("Area")
-                        .HasColumnType("float");
-
-                    b.Property<int>("InventoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Place")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Storages", "Factory");
                 });
 
             modelBuilder.Entity("Factory.Entities.Supplier", b =>
@@ -466,15 +516,36 @@ namespace Factory.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("GeoLocation")
+                    b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Suppliers", "Factory");
+                });
+
+            modelBuilder.Entity("Factory.Entities.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("InventoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouses", "Factory");
                 });
 
             modelBuilder.Entity("Factory.Entities.Car", b =>
@@ -485,26 +556,45 @@ namespace Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Factory.Entities.Supplier", "Supplier")
+                        .WithMany("Cars")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Garage");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Factory.Entities.Employee", b =>
                 {
-                    b.HasOne("Factory.Entities.Machine", "Machine")
-                        .WithMany("Employees")
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Factory.Entities.Shift", "Shift")
                         .WithMany("Employees")
                         .HasForeignKey("ShiftId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Machine");
-
                     b.Navigation("Shift");
+                });
+
+            modelBuilder.Entity("Factory.Entities.Joins.EmployeeLineJoin", b =>
+                {
+                    b.HasOne("Factory.Entities.Employee", "Employee")
+                        .WithMany("EmployeeLineJoins")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Factory.Entities.Line", "Line")
+                        .WithMany("EmployeeLineJoins")
+                        .HasForeignKey("LineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Line");
                 });
 
             modelBuilder.Entity("Factory.Entities.Joins.MaterialOrderJoin", b =>
@@ -518,7 +608,7 @@ namespace Factory.Migrations
                     b.HasOne("Factory.Entities.RawMaterial", "RawMaterial")
                         .WithMany("MaterialOrderJoins")
                         .HasForeignKey("RawMaterialId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -570,17 +660,9 @@ namespace Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Factory.Entities.Storage", "Storage")
-                        .WithMany("MachineParts")
-                        .HasForeignKey("StorageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Car");
 
                     b.Navigation("Machine");
-
-                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("Factory.Entities.Order", b =>
@@ -597,17 +679,9 @@ namespace Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Factory.Entities.Supplier", "Supplier")
-                        .WithMany("Orders")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Factory.Entities.Product", b =>
@@ -624,9 +698,9 @@ namespace Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Factory.Entities.Storage", "Storage")
+                    b.HasOne("Factory.Entities.Warehouse", "Warehouse")
                         .WithMany("products")
-                        .HasForeignKey("StorageId")
+                        .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -634,7 +708,26 @@ namespace Factory.Migrations
 
                     b.Navigation("Line");
 
-                    b.Navigation("Storage");
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Factory.Entities.ProductDetail", b =>
+                {
+                    b.HasOne("Factory.Entities.Product", "Product")
+                        .WithMany("ProductDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Factory.Entities.Warehouse", "Warehouse")
+                        .WithMany("ProductDetails")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Factory.Entities.RawMaterial", b =>
@@ -645,7 +738,23 @@ namespace Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Factory.Entities.Sensor", "Sensor")
+                        .WithMany("RawMaterials")
+                        .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Factory.Entities.Supplier", "Supplier")
+                        .WithMany("RawMaterials")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Sensor");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Factory.Entities.Sensor", b =>
@@ -667,15 +776,15 @@ namespace Factory.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Factory.Entities.Storage", "Storage")
+                    b.HasOne("Factory.Entities.Warehouse", "Warehouse")
                         .WithMany("SensorDataLogs")
-                        .HasForeignKey("StorageId")
+                        .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sensor");
 
-                    b.Navigation("Storage");
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("Factory.Entities.Car", b =>
@@ -699,6 +808,11 @@ namespace Factory.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Factory.Entities.Employee", b =>
+                {
+                    b.Navigation("EmployeeLineJoins");
+                });
+
             modelBuilder.Entity("Factory.Entities.Garage", b =>
                 {
                     b.Navigation("Cars");
@@ -706,6 +820,8 @@ namespace Factory.Migrations
 
             modelBuilder.Entity("Factory.Entities.Line", b =>
                 {
+                    b.Navigation("EmployeeLineJoins");
+
                     b.Navigation("Machines");
 
                     b.Navigation("Products");
@@ -715,14 +831,17 @@ namespace Factory.Migrations
 
             modelBuilder.Entity("Factory.Entities.Machine", b =>
                 {
-                    b.Navigation("Employees");
-
                     b.Navigation("MachineParts");
                 });
 
             modelBuilder.Entity("Factory.Entities.Order", b =>
                 {
                     b.Navigation("MaterialOrderJoins");
+                });
+
+            modelBuilder.Entity("Factory.Entities.Product", b =>
+                {
+                    b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("Factory.Entities.RawMaterial", b =>
@@ -732,6 +851,8 @@ namespace Factory.Migrations
 
             modelBuilder.Entity("Factory.Entities.Sensor", b =>
                 {
+                    b.Navigation("RawMaterials");
+
                     b.Navigation("SensorDataLogs");
                 });
 
@@ -742,18 +863,20 @@ namespace Factory.Migrations
                     b.Navigation("ShiftLineJoins");
                 });
 
-            modelBuilder.Entity("Factory.Entities.Storage", b =>
+            modelBuilder.Entity("Factory.Entities.Supplier", b =>
                 {
-                    b.Navigation("MachineParts");
+                    b.Navigation("Cars");
+
+                    b.Navigation("RawMaterials");
+                });
+
+            modelBuilder.Entity("Factory.Entities.Warehouse", b =>
+                {
+                    b.Navigation("ProductDetails");
 
                     b.Navigation("products");
 
                     b.Navigation("SensorDataLogs");
-                });
-
-            modelBuilder.Entity("Factory.Entities.Supplier", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
